@@ -5,6 +5,8 @@ const path=require('path');
 const nunjucks=require("nunjucks");
 nunjucks.configure('views', { autoescape: true });
 const db=require("./dao");
+const [car,pin]=require('./model/index');
+const cc=require('./controller/cars.controller');
 
 const port=process.env.PORT || 3000;
 
@@ -21,9 +23,20 @@ nunjucks.configure(path.resolve(__dirname,'public/views'),{
 app.get("/",(req,res)=>{
     res.status(200).render("index.html",{ title:"nunjucks", car:{name:"swift", power:82, torque: 112}, cars:["swift","i20","polo","baleno"], hybrid:true  });
 });
-app.get("/about",(req,res)=>{
-    res.status(200).render("about.html",{ title:"About Us" });
+
+app.get("/cars",cc);
+app.get("/cars/:car",(req,res)=>{
+    const name=req.params.car.replaceAll("-"," ");
+   
+    car.find({name:RegExp(name,'i')}).then(i=>{
+        res.status(200).render("car.html",{ title: i[0].name, data: i });
+    }).catch(e=>{
+        res.status(200).render("car.html",{ data:[{res:"error"}] });
+    });
+
 });
+
+
 app.get("/contact",(req,res)=>{
     res.status(200).render("contact.html",{ title:"Contact Us" });
 });

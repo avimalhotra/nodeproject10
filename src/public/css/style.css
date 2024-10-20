@@ -21,7 +21,16 @@ nav ul{ list-style: none; padding: 0; display: flex;  }
 nav li{ margin-right: 10px;}
 nav a{ display: block; padding: 8px 12px; color: #000; text-decoration: none;}
 
+.breadcrumb{ display: flex; list-style: none; padding: 0; background: #333; padding: 5px; }
+.breadcrumb li{ margin-right: 10px;}
+.breadcrumb li:not(:first-child)::before{ content: '\276F'; color: #fff;}
+.breadcrumb a{ display: inline-block; text-decoration: none; padding: 6px 12px; color: #ddd;}
+
 main{ padding: 10px; background: #fff;}
+main h2 span{ text-transform: capitalize;}
 main ol{ text-transform: capitalize;}
+.table{ text-transform: capitalize; border-collapse: collapse; border: 1px solid #888; width: 100%; margin-block: 1rem; }
+.table :is(td,th){ border: 1px solid #888; padding: 5px; }
+.table a{ text-decoration: none; display: block;}
 
 footer{ padding: 10px; background: #333; color: #fff; text-align: center;}
