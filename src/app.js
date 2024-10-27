@@ -36,6 +36,8 @@ passport.deserializeUser( (user, next)=>{
 const db=require("./dao");
 const [car,pin,user]=require('./model/index');
 const cc=require('./controller/cars.controller');
+const compression = require("compression");
+app.use(compression());                     // Compress all routes
 
 
 const port=process.env.PORT || 3000;
@@ -54,7 +56,6 @@ nunjucks.configure(path.resolve(__dirname,'public/views'),{
 
 /* passport */
 passport.use('local', new LocalStrategy(( username, password, done) => {
-        
         
     user.find({ name: username }).then(user=>{      
         
@@ -117,7 +118,7 @@ app.post("/login",(req,res)=>{
           res.render('login.html', { error: err });
         } 
         else if (!user) {
-          res.render('login.html', { errorMessage: info.message });
+          res.render('login.html', { errorMessage: info.message, title:"Login" });
         } 
         else {
           //setting users in session
